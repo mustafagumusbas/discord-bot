@@ -1,1 +1,31 @@
-https://discord.com/oauth2/authorize?client_id=1288753050034503744&permissions=8&integration_type=0&scope=bot
+import discord
+from sifre import sifreyapici
+from yazitura import yazitura_at
+from sayi_tutmak import sayi_tut
+
+# ayricaliklar (intents) değişkeni botun ayrıcalıklarını depolayacak
+intents = discord.Intents.default()
+# Mesajları okuma ayrıcalığını etkinleştirelim
+intents.message_content = True
+# client (istemci) değişkeniyle bir bot oluşturalım ve ayrıcalıkları ona aktaralım
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'{client.user} olarak giriş yaptık.')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('/şifre'):
+        await message.channel.send(sifreyapici(8))
+    elif message.content.startswith('/yazıtura'):
+        sonuc = yazitura_at()
+        await message.channel.send(sonuc)
+    if message.content.startswith('/sayı'):
+        await message.channel.send(sayi_tut)
+    else:
+        await message.channel.send(message.content)
+
+client.run("Your Token")

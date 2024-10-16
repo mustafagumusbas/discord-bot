@@ -14,19 +14,6 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 async def on_ready():
     print(f'{bot.user} olarak giriş yaptık')
 
-
-def get_duck_image_url():    
-    url = 'https://random-d.uk/api/random'
-    res = requests.get(url)
-    data = res.json()
-    return data['url']
-
-
-@bot.command('duck')
-async def duck(ctx):
-    image_url = get_duck_image_url()
-    await ctx.send(image_url)
-
 @bot.command()
 async def hello(ctx):
     await ctx.send(f'Merhaba! Ben {bot.user}, bir Discord sohbet botuyum!')
@@ -42,5 +29,41 @@ async def resim(ctx):
     with open(f"resimler/{rastgele_resim}", 'rb') as f:
         picture = discord.File(f)
     await ctx.send(file = picture)
+
+@bot.command()
+async def çöpayırma(ctx):
+    await ctx.send("""Büyük şehirlerde, neredeyse her binanın arka bahçesinde dört farklı renkte çöp kutusu bulunur.
+                      Kırsal alanda, bu kutuları bulmak için bir geri dönüşüm tesisine gitmeniz gerekebilir 
+                      veya bir sonraki çöp toplama tarihine kadar çöplerinizi mesela garajınızda veya 
+                      evinizin bodrum katında muhafaza edebilirsiniz.
+                   
+                      Her bir çöp kutusuna yalnızca belirli bir atık türü atılabilir:
+                    
+                       Sarı kutu (ve "sarı torba" veya “Yeşil (Geri Dönüşüm) İşaretli Çöp”): 
+                       Hafif ambalajlar, yani camdan veya kâğıttan imal edilmeyen tüm ambalajlar
+                    
+                       Yeşil veya Mavi Kutu: Kâğıt atıkları ve kartonla
+
+                       Siyah veya Gri Kutu: Geri kazanım yapılamayan artık atıklar veya ev çöpleri ve 
+                       geri dönüşüm edilemeyen diğer tüm atık türleri 
+                   
+                       Biyolojik atık veya Kahverengi Kutu: kompostlanabilen mutfak ve bahçe atığı 
+                   
+                  """ )    
+    
+    
+@bot.command()
+async def çöpazaltma(ctx):    
+    await ctx.send("""
+        Bilinçli tüketerek israfı azaltmak için birkaç ipucu:
+
+         Plastik ambalajsız bölgesel ürünler satın alın,
+         Daha az ve daha dayanıklı mal satın alın,
+         Yola çıkmadan önce yanınıza bir öğle yemeği çantası ve sıcak/soğuk içecek şişesi alın,
+         Plastik poşetler yerine sepet ve bez torbalar kullanın,
+         Eşyalarınızı değiş-tokuş edin, ödünç alın ve onarın - böylece para da biriktirebilirsiniz.
+        """
+    )
+
     
 bot.run("Your Token")
